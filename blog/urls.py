@@ -34,6 +34,11 @@ urlpatterns = [
     path(r'rss/', BlogRssFeed(), name='rss'),
     path(r'search/', MySearchView(), name='haystack_search'),
     path(r'ckeditor/', include('ckeditor_uploader.urls')),
+
 ]
+
+hander404 = 'myblog.views.page_not_found'
+
+hander500 = 'myblog.views.page_errors'
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

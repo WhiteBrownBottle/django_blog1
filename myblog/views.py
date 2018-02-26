@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from haystack.views import SearchView
 from blog.settings import HAYSTACK_SEARCH_RESULTS_PER_PAGE
 import markdown
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 
@@ -95,8 +96,7 @@ class TagView(View):
 class TagDetailView(View):
 
     def get(self, request, tag_name):
-        tag = Tag.objects.filter(name=tag_name).first()
-
+        tag = get_object_or_404(Tag, name=tag_name)
         tag_blogs = tag.blog_set.all()
         # 博客、标签、分类数目统计
         count_nums = Counts.objects.get(id=1)
@@ -127,7 +127,8 @@ class BlogDetailView(View):
     """
     def get(self, request, blog_id):
 
-        blog = Blog.objects.get(id=blog_id)
+        blog = get_object_or_404(Blog, pk=blog_id)
+
         blog.content = markdown.markdown(blog.content, extensions=[
                                      'markdown.extensions.extra',
                                      'markdown.extensions.codehilite',
@@ -189,7 +190,8 @@ class BlogDetailView(View):
 class CategoryDetailView(View):
 
     def get(self, request, category_name):
-        category = Category.objects.filter(name = category_name).first()
+
+        category = get_object_or_404(Category, name=category_name)
         category_blogs = category.blog_set.all()
 
         # 分页
@@ -247,6 +249,15 @@ class MySearchView(SearchView):
         page = paginator.page(page_no)
 
         return (paginator, page)
+
+
+# 配置404 500错误页面
+def page_not_found(request):
+    return render(request, '404.html')
+
+def page_errors(request):
+    return render(request, '500.html')
+
 
 
 
