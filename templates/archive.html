@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}归档{% endblock %}
+
+{% block content %}
+    <div class="content-wrap">
+    <div id="content" class="content">
+        <section id="posts" class="posts-collapse">
+            <span class="archive-move-on"></span>
+            <span class="archive-page-counter">非常好! 目前共计 {{ all_blog.object_list|length }} 篇日志。 继续努力。</span>
+
+
+            {%  regroup all_blog.object_list by created_time.year as dates_by_year %}
+            {% for year in dates_by_year %}
+                <div class="collection-title">
+                    <h2 class="archive-year motion-element" id="archive-year-2017" style="opacity: 1; display: block; transform: translateX(0px);">{{ year.grouper }}</h2>
+                </div>
+                    {% for blog in year.list %}
+                    <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article" style="opacity: 1; display: block; transform: translateY(0px);">
+                    <header class="post-header">
+
+                    <h1 class="post-title">
+                        <a class="post-title-link" href="{% url 'blog_detail' blog.id %}" itemprop="url">
+                            <span itemprop="name">{{ blog.title }}</span>
+                         </a>
+                    </h1>
+
+                    <div class="post-meta">
+                        <time class="post-time" itemprop="dateCreated" datetime="2017-09-01T20:05:18+08:00" content="2017-09-01">
+                    {{ blog.created_time|date:'m-d' }}
+                        </time>
+                      </div>
+
+                    </header>
+                  </article>
+                    {% endfor %}
+            {% endfor %}
+
+
+
+
+
+        </section>
+
+
+
+          <!--分页展示-->
+<nav class="pagination">
+    <div class="pageturn">
+        <ul class="pagelist">
+
+
+
+
+
+
+                <li class="active"><a href="http://www.geerniya.cn/archive/?page=1">1</a></li>
+
+
+
+
+            <li class="none"><a href="http://www.geerniya.cn/archive/">...</a></li>
+
+
+
+
+                 <li><a href="http://www.geerniya.cn/archive/?page=3" class="page">3</a></li>
+
+
+
+
+            <li class="long"><a href="http://www.geerniya.cn/archive/?page=2">下一页</a></li>
+
+
+        </ul>
+    </div>
+</nav>
+
+
+    </div>
+
+</div>
+{% endblock %}
