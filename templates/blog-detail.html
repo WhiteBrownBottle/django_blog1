@@ -162,7 +162,7 @@
             <hr class="the-line"  />
                 <span class="nickname">{{ comment.name }} - </span>
                 <time class="submit-date"
-                      datetime="{{ comment.create_time }}">{{ comment.create_time|date:"Y/m/d   h:m" }}</time>
+                      datetime="{{ comment.created_time }}">{{ comment.created_time|date:"Y/m/d  h:m" }}</time>
                 <p class="floor">{{ forloop.counter }} #  </p>
                 <div style="word-wrap: break-word">
                         {{ comment.content|safe }}
