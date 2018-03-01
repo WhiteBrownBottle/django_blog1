@@ -21,7 +21,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-
 urlpatterns = [
     path(r'admin/', admin.site.urls),
     path(r'', IndexView.as_view(), name='index'),
