@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include, re_path
+from django.conf.urls import url, include
 from myblog.views import IndexView, ArchiveView, TagView, TagDetailView, BlogDetailView, AddCommentView, CategoryDetailView, MySearchView
 from myblog.feeds import BlogRssFeed
 from django.conf import settings
@@ -22,17 +22,17 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path(r'admin/', admin.site.urls),
-    path(r'', IndexView.as_view(), name='index'),
-    path(r'archive/', ArchiveView.as_view(), name='archives'),
-    path(r'tags/', TagView.as_view(), name='tags'),
-    path(r'tags/<tag_name>/', TagDetailView.as_view(), name='tag_name'),
-    path(r'blog/<blog_id>/', BlogDetailView.as_view(), name='blog_detail'),
-    path(r'category/<category_name>/', CategoryDetailView.as_view(), name='category_detail'),
-    path(r'add_comment/', AddCommentView.as_view(), name='add_comment'),
-    path(r'rss/', BlogRssFeed(), name='rss'),
-    path(r'search/', MySearchView(), name='haystack_search'),
-    path(r'ckeditor/', include('ckeditor_uploader.urls')),
+    url(r'^admin/$', admin.site.urls),
+    url(r'^$', IndexView.as_view(), name='index'),
+    url(r'^archive/$', ArchiveView.as_view(), name='archives'),
+    url(r'^tags/$', TagView.as_view(), name='tags'),
+    url(r'^tags/(?P<tag_name>\w+)/$', TagDetailView.as_view(), name='tag_name'),
+    url(r'^blog/(?P<blog_id>\d+)/$', BlogDetailView.as_view(), name='blog_detail'),
+    url(r'^category/(?P<category_name>\w+)/$', CategoryDetailView.as_view(), name='category_detail'),
+    url(r'^add_comment/$', AddCommentView.as_view(), name='add_comment'),
+    url(r'^rss/$', BlogRssFeed(), name='rss'),
+    url(r'^search/$', MySearchView(), name='haystack_search'),
+    url(r'^ckeditor/$', include('ckeditor_uploader.urls')),
 
 ]
 
